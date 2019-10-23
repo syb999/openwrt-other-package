@@ -23,7 +23,7 @@ ddns.rmempty = false
 localnet = s:taboption("basic", Value, "server", translate("Client Network"))
 localnet.datatype = "string"
 localnet.description = translate("VPN Client Network IP with subnet")
-localnet.default = "10.9.9.0 255.255.255.0"
+localnet.default = "10.7.7.0 255.255.255.0"
 
 
 proto = s:taboption("basic",Value,"proto", translate("proto"))

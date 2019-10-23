@@ -21,7 +21,7 @@ msgid "Client Network"
 msgstr "客户端网段"
 
 msgid "VPN Client Network IP with subnet"
-msgstr "客户端分配的网段地址（默认为 10.9.9.0 255.255.255.0）"
+msgstr "客户端分配的网段地址（默认为 10.7.7.0 255.255.255.0）"
 
 
 msgid "Client Settings"
