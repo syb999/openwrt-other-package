@@ -13,6 +13,8 @@ PKG_SOURCE:=$(PKG_SOURCE_SUBDIR).tar.xz
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_SOURCE_SUBDIR)
 PKG_MAINTAINER:=Henryk Heisig <hyniu@o2.pl>
 
+PKG_USE_MIPS16:=0
+
 include $(INCLUDE_DIR)/package.mk
 
 ifeq ($(CONFIG_BIG_ENDIAN),y)
