@@ -155,6 +155,17 @@ define Package/libcupsppdc/description
 	Common UNIX Printing System - PPDC library
 endef
 
+define Package/cups-locale-zh
+$(call Package/cups/Default)
+  SECTION:=net
+  CATEGORY:=Network
+  TITLE:=Common UNIX Printing System - Locale zh
+endef
+
+define Package/cups-locale-zh/description
+	Common UNIX Printing System - Locale zh
+endef
+
 define Build/Configure
 	$(call Build/Configure/Default, \
 		--with-cups-user="nobody" \
@@ -300,6 +311,11 @@ define Package/libcupsppdc/install
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libcupsppdc.so* $(1)/usr/lib/
 endef
 
+define Package/cups-locale-zh/install
+	$(INSTALL_DIR) $(1)/usr/share/locale
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/locale/zh $(1)/usr/share/locale/
+endef
+
 define Build/InstallDev
 	$(INSTALL_DIR) $(2)/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/cups-config $(2)/bin/
@@ -319,3 +335,4 @@ $(eval $(call BuildPackage,cups-bsd))
 $(eval $(call BuildPackage,cups-client))
 $(eval $(call BuildPackage,cups-filters))
 $(eval $(call BuildPackage,cups-ppdc))
+$(eval $(call BuildPackage,cups-locale-zh))
