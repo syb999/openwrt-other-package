@@ -521,7 +521,7 @@ void parse_http_proto(flow_info_t *flow)
 	}
 	if (flow->sport != 80 && flow->dport != 80)
 		return;
-	for (i = 0; i < data_len - 4; i++) {
+	for (i = 0; i < data_len; i++) {
 		if (data[i] == 0x0d && data[i + 1] == 0x0a){
 			if (0 == memcmp(&data[start], "POST ", 5)) {
 				flow->http.match = AF_TRUE;
@@ -537,7 +537,7 @@ void parse_http_proto(flow_info_t *flow)
 				flow->http.url_len = i - start - 4;
 				//dump_str("post request", flow->http.url_pos, flow->http.url_len);
 			}
-			else if (0 == memcmp(&data[start], "Host: ", 6) ){
+			else if (0 == memcmp(&data[start], "Host:", 5) ){
 				flow->http.host_pos = data + start + 6;
 				flow->http.host_len = i - start - 6;
 				//dump_str("host ", flow->http.host_pos, flow->http.host_len);
@@ -797,11 +797,14 @@ static u_int32_t app_filter_hook(unsigned int hook,
 #else
 	struct nf_conn *ct = (struct nf_conn *)skb->nfct;
 #endif
-
 	if (ct == NULL) {
 		//AF_ERROR("ct is null\n");
         return NF_ACCEPT;
     }
+
+	if (!nf_ct_is_confirmed(ct)){
+		return NF_ACCEPT;
+	}
 
 #if defined(CONFIG_NF_CONNTRACK_MARK)
 	if (ct->mark != 0)
@@ -809,6 +812,7 @@ static u_int32_t app_filter_hook(unsigned int hook,
 		return NF_DROP;
 	}
 #endif
+
 // 3.12.74-->3.13-rc1
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(3,13,0)
 	struct nf_conn_acct *acct;
@@ -818,23 +822,28 @@ static u_int32_t app_filter_hook(unsigned int hook,
 	total_packets = (unsigned long long)atomic64_read(&acct->counter[IP_CT_DIR_ORIGINAL].packets) 
 		+ (unsigned long long)atomic64_read(&acct->counter[IP_CT_DIR_REPLY].packets);
 #else
+
 	struct nf_conn_counter *counter;
 	counter = nf_conn_acct_find(ct);
+
 	if (!counter)
 		return NF_ACCEPT;	
+
 	total_packets = (unsigned long long)atomic64_read(&counter[IP_CT_DIR_ORIGINAL].packets) 
 		+ (unsigned long long)atomic64_read(&counter[IP_CT_DIR_REPLY].packets);
+
 #endif
 	if (total_packets > MAX_PARSE_PKT_NUM){
 		return NF_ACCEPT;
 	}
+
 	memset((char *)&flow, 0x0, sizeof(flow_info_t));
 	parse_flow_base(skb, &flow);
 	parse_http_proto(&flow);
 	parse_https_proto(&flow);
 	//dump_flow_info(&flow);
 	if (app_filter_match(&flow)){
-		
+
 #if defined(CONFIG_NF_CONNTRACK_MARK)
 		ct->mark |= APP_FILTER_DROP_BITS;
 #endif
