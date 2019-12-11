@@ -23,6 +23,8 @@ PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
+TARGET_CFLAGS += -std=gnu99
+
 define Package/fping
   SECTION:=net
   CATEGORY:=Network
