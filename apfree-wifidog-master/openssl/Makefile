@@ -24,7 +24,7 @@ PKG_SOURCE_URL:= \
 	ftp://ftp.pca.dfn.de/pub/tools/net/openssl/source/ \
 	http://www.openssl.org/source/ \
 	http://www.openssl.org/source/old/$(PKG_BASE)/
-PKG_HASH:=1e3a91bc1f9dfce01af26026f856e064eab4c8ee0a8f457b5ae30b40b8b711f2
+PKG_MD5SUM:=3be209000dbc7e1b95bcdf47980a3baa
 
 PKG_LICENSE:=OpenSSL
 PKG_LICENSE_FILES:=LICENSE
