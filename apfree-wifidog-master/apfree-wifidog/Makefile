@@ -57,7 +57,7 @@ define Package/apfree-wifidog/install
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/wifidogx.init $(1)/etc/init.d/wifidogx
 	$(INSTALL_DIR) $(1)/etc/config
-	$(CP) ./files/wifidogx.conf $(1)/etc/config/wifidogx
+	$(INSTALL_CONF) ./files/wifidogx.conf $(1)/etc/config/wifidogx
 endef
 
 $(eval $(call BuildPackage,apfree-wifidog))
