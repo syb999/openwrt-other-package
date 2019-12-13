@@ -4,3 +4,4 @@ uci batch <<-EOF
 	set luci.main.mediaurlbase=/luci-static/darkmatter
 	commit luci
 EOF
+exit 0

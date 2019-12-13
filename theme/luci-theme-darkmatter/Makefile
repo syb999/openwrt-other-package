@@ -24,7 +24,6 @@ include $(TOPDIR)/rules.mk
 
 LUCI_TITLE:=Darkmatter Theme
 LUCI_DEPENDS:=
-PKG_NAME:=luci-theme-Darkmatter
 
 include $(TOPDIR)/feeds/luci/luci.mk
 
