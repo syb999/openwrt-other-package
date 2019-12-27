@@ -8,10 +8,10 @@ include $(TOPDIR)/rules.mk
 
 LUCI_TITLE:=Argon Magic Change Theme
 LUCI_DEPENDS:=
-PKG_VERSION:=1.0
-PKG_RELEASE:=05-20191104
+PKG_VERSION:=1.0.x
+PKG_RELEASE:=05-20191104.x
+PKG_NAME:=luci-theme-xargon
 
 include $(TOPDIR)/feeds/luci/luci.mk
-#include ../luci_my.mk
 
 # call BuildPackage - OpenWrt buildroot signature

@@ -1,0 +1,7 @@
+#!/bin/sh
+uci batch <<-EOF
+	set luci.themes.Xargon=/luci-static/xargon
+	set luci.main.mediaurlbase=/luci-static/xargon
+	commit luci
+EOF
+exit 0
