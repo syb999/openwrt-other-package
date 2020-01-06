@@ -1,9 +1,8 @@
+
 config smartdns
 	option server_name 'smartdns'
 	option port '6053'
 	option tcp_server '1'
-	option ipv6_server '1'
-	option dualstack_ip_selection '1'
 	option prefetch_domain '1'
 	option rr_ttl_min '300'
 	option seconddns_port '7053'
@@ -18,6 +17,8 @@ config smartdns
 	option coredump '0'
 	option redirect 'redirect'
 	option cache_size '512'
+	option ipv6_server '0'
+	option dualstack_ip_selection '0'
 	option enabled '1'
 	list old_redirect 'redirect'
 	list old_port '6053'
@@ -28,15 +29,19 @@ config server
 	option type 'udp'
 	option name 'alibaba'
 	option ip '223.5.5.5'
+	option port '53'
 
 config server
 	option enabled '1'
 	option type 'udp'
 	option name 'google'
 	option ip '8.8.8.8'
+	option port '53'
 
 config server
 	option enabled '1'
 	option type 'udp'
 	option name '114'
 	option ip '114.114.114.114'
+	option port '53'
+
