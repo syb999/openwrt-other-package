@@ -10,21 +10,20 @@
 
 include $(TOPDIR)/rules.mk
 
-_VER_MAJ := $(shell cat "./version/.VER_MAJ")
-_VER_MIN := $(shell cat "./version/.VER_MIN")
-_VER_REV := $(shell cat "./version/.VER_REV")
-_VER_PTH := $(shell cat "./version/.VER_PTH")
-
 PKG_NAME:=UnblockNeteaseMusic
-PKG_VERSION:=$(_VER_MAJ).$(_VER_MIN).$(_VER_REV)
-PKG_RELEASE:=$(_VER_PTH)
+PKG_VERSION:=0.21.0
+PKG_RELEASE:=1
 
 PKG_LICENSE:=MIT
 
-PKG_SOURCE_URL:=https://github.com/nondanee/UnblockNeteaseMusic/archive/
-PKG_SOURCE:=v$(PKG_VERSION).tar.gz
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
-PKG_HASH:=skip
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://github.com/nondanee/UnblockNeteaseMusic.git
+PKG_SOURCE_VERSION:=00c857d5cb9ca7a009cded7d52ebc21c875875f0
+
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)
+PKG_SOURCE:=$(PKG_SOURCE_SUBDIR)-$(PKG_VERSION).tar.gz
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_SOURCE_SUBDIR)
+PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -32,9 +31,10 @@ define Package/$(PKG_NAME)
 	SECTION:=net
 	CATEGORY:=Network
 	TITLE:=Revive unavailable songs for Netease Cloud Music
-	DEPENDS:=+node 
+	DEPENDS:=+node
 	URL:=https://github.com/nondanee/UnblockNeteaseMusic/releases
 	SUBMENU:=NeteaseMusic
+	PKGARCH:=all
 endef
 
 define Package/$(PKG_NAME)/description
@@ -43,6 +43,8 @@ endef
 
 define Build/Prepare
 	tar -xzvf $(DL_DIR)/$(PKG_SOURCE) -C $(PKG_BUILD_DIR)
+	echo -e $(PKG_VERSION) > $(PKG_BUILD_DIR)/UnblockNeteaseMusic/core_ver
+	echo -e $(PKG_SOURCE_VERSION) > $(PKG_BUILD_DIR)/UnblockNeteaseMusic/local_ver
 endef
 
 define Build/Configure
@@ -53,8 +55,7 @@ endef
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR)  $(1)/usr/share/$(PKG_NAME)
-	echo $(PKG_VERSION) > $(1)/usr/share/$(PKG_NAME)/VERSION
-	cp -pR $(PKG_BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)/* $(1)/usr/share/$(PKG_NAME)
+	cp -pR $(PKG_BUILD_DIR)/$(PKG_NAME)/* $(1)/usr/share/$(PKG_NAME)
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))
