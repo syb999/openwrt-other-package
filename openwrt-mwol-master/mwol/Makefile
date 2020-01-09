@@ -32,7 +32,7 @@ include $(INCLUDE_DIR)/cmake.mk
 define Package/mwol
   SECTION:=net
   CATEGORY:=Network
-  DEPENDS:=+libpthread +libmosquitto-ssl +luci-lib-json +libopenssl
+  DEPENDS:=+libpthread +libmosquitto +luci-lib-json +libopenssl
   TITLE:=MQTT Wake On Lan
   URL:=http://www.mleaf.org
 endef
