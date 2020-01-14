@@ -26,6 +26,7 @@ define Package/asterisk-gui
 	CATEGORY:=Network
 	TITLE:=Asterisk GUI for Asterisk x.x
 	VERSION:=$(PKG_VERSION)
+	DEPENDS:=+asterisk18 +asterisk18-exec +asterisk18-system +asterisk18-chan-local +asterisk18-sounds
 endef
 
 define Package/asterisk-gui/description
@@ -64,7 +65,8 @@ endef
 
 define Package/asterisk-gui/install
 	$(INSTALL_DIR) $(1)/etc/asterisk/
-	#$(CP) ./files/gui_* $(1)/etc/asterisk/
+	$(CP) ./files/http.conf $(1)/etc/asterisk/
+	$(CP) ./files/manager.conf $(1)/etc/asterisk/
 	$(INSTALL_DIR) $(1)/usr/lib/asterisk/static-http
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/asterisk/static-http/* $(1)/usr/lib/asterisk/static-http
 	$(INSTALL_DIR) $(1)/usr/lib/asterisk/scripts
