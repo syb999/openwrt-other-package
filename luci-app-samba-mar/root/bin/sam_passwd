@@ -1,0 +1,5 @@
+#!/bin/sh /etc/rc.common
+
+passwd=$(uci get samba.@samba[0].passwd)
+( echo $passwd;echo $passwd )  | smbpasswd -s -a root
+

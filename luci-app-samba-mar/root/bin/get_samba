@@ -1,0 +1,93 @@
+#!/bin/sh -e
+
+
+dl_mod=$(uci get samba.@samba[0].dl_mod)
+version_g=$(uci get samba.@samba[0].version_g)
+version_d=$(uci get samba.@samba[0].version_d)
+version_c=$(uci get samba.@samba[0].version_c)
+c_url=$(uci get samba.@samba[0].c_url)
+file_url=https://archive.openwrt.org/chaos_calmer/15.05.1
+
+
+get_arch() {
+	case "$version" in
+		ar71xx)
+			arch=ar71xx
+			;;
+		mt7620|rt288x|rt305x|rt3883)
+			arch=ramips_24kec
+			;;
+		mt7621)
+			arch=ramips_1004kc
+			;;
+		mt7628)
+			arch=ramips
+			;;
+		*)
+			;;
+	esac
+}
+
+
+if [ $dl_mod = "git" ]; then
+	version="$version_g"
+	get_arch
+
+	case "$version" in
+		ar71xx)
+			dl_url="$file_url"/"$version"/generic/packages/base/samba36-server_3.6.25-5_ar71xx.ipk
+			;;
+		mt7620|rt288x|rt305x|rt3883|mt7621|mt7628)
+			dl_url="$file_url"/ramips/"$version"/packages/base/samba36-server_3.6.25-5_"$arch".ipk
+			;;
+		*)
+			;;
+	esac
+
+elif [ $dl_mod = "blog" ]; then
+	version="$version_d"
+	get_arch
+	dl_url=https://www.myopenwrt.org/wp-content/uploads/2018/02/samba36-server_3.6.25-5_"$arch".ipk
+else
+	version="$version_c"
+	get_arch
+	dl_url="$c_url"/samba36-server_3.6.25-5_"$arch".ipk
+fi
+
+
+mkdir -p /var/samba
+cd /var/samba
+
+[ -f /usr/sbin/samba_multicall ] && {
+	if [ ! -h /usr/sbin/samba_multicall ]; then
+		exit
+	else
+		rm /usr/sbin/samba_multicall
+	fi
+}
+	
+[ ! -f /usr/sbin/samba_multicall ] && {
+	if [ -f /var/samba/samba_multicall ]; then
+		ln -s /var/samba/samba_multicall /usr/sbin/samba_multicall
+	else
+
+		let a=0
+		while [ ! -f /var/samba/samba36-server_3.6.25-5_"$arch".ipk ]; do
+			[ $a = 3 ] && exit
+			wget -T10 "$dl_url"
+			sleep 2
+			let "a = a + 1"
+		done		
+		killall -9 pidof openssl
+
+		mv samba36-server_3.6.25-5_"$arch".ipk samba36-server_3.6.25-5_"$arch".tar.gz
+		tar -zxvf samba36-server_3.6.25-5_"$arch".tar.gz
+		tar -zxvf data.tar.gz && rm *
+		mv usr/sbin/samba_multicall /tmp/samba/
+		rm -rf etc/ usr/
+		chmod 0755 *
+		rm /usr/sbin/samba_multicall
+		ln -s /var/samba/samba_multicall /usr/sbin/samba_multicall
+	fi
+}
+

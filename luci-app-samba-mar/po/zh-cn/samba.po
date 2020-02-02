@@ -1,0 +1,122 @@
+msgid "Network Shares"
+msgstr "网络共享"
+
+msgid "Samba is not running"
+msgstr "Samba服务未启动"
+
+msgid "Samba is running"
+msgstr "Samba服务启动"
+
+msgid "General Settings"
+msgstr "基本设置"
+
+msgid "Edit Template"
+msgstr "编辑模板"
+
+msgid "Enable Samba"
+msgstr "开启Samba服务"
+
+msgid "Hostname"
+msgstr "主机名"
+
+msgid "Description"
+msgstr "描述"
+
+msgid "Workgroup"
+msgstr "工作组"
+
+msgid "Share home-directories"
+msgstr "共享主目录"
+
+msgid "Allow system users to reach their home directories via network shares"
+msgstr "允许系统用户通过网络共享访问他们的主目录"
+
+msgid "Select_config"
+msgstr "选择配置文件"
+
+msgid "Password"
+msgstr "密码"
+
+msgid "The password of root."
+msgstr "root密码"
+
+msgid "Passwd_mod"
+msgstr "修改密码"
+
+msgid "Change the password of root."
+msgstr "修改root密码"
+
+msgid "Device"
+msgstr "设备"
+
+msgid "Select the device or directories to chmod."
+msgstr "选择需要更改权限的设备或目录"
+
+msgid "Mask"
+msgstr "权限"
+
+msgid "Mask for new files and/or directories."
+msgstr "新文件和/或者目录将改为此权限"
+
+msgid "Chmod_files"
+msgstr "目录中文件权限更改"
+
+msgid "false"
+msgstr "否"
+
+msgid "true"
+msgstr "是"
+
+msgid "While true,chmod files,else only chmod directories."
+msgstr "当选择“是”，将更改所选目录下的所有文件权限；选择“否”，将只更改目录的权限"
+
+msgid "Chmod_dir"
+msgstr "更改文件权限"
+
+msgid "Chmod the files that yor select."
+msgstr "更改所选择文件的权限"
+
+msgid "Shared Directories"
+msgstr "共享目录"
+
+msgid "Name"
+msgstr "共享名"
+
+msgid "Path"
+msgstr "目录"
+
+msgid "Allowed users"
+msgstr "允许用户"
+
+msgid "Read-only"
+msgstr "只读"
+
+msgid "Allow guests"
+msgstr "允许匿名用户"
+
+msgid "Create mask"
+msgstr "创建权限"
+
+msgid "Mask for new files"
+msgstr "新文件权限"
+
+msgid "Directory mask"
+msgstr "目录权限"
+
+msgid "Mask for new directories"
+msgstr "新目录权限"
+
+msgid "Edit the 1st template that is used for generating the samba configuration."
+msgstr "编辑第一个配置文件用来生成samba设置的模板，此配置在window 10正常使用"
+
+msgid ""
+"This is the content of the file '/etc/samba/smb.conf.template' from which "
+"your samba configuration will be generated. Values enclosed by pipe symbols "
+"('|') should not be changed. They get their values from the 'General "
+"Settings' tab."
+msgstr ""
+"创建samba设置的 \"/etc/samba/smb.conf.template\" 文件的内容。被通道符|包围的"
+"值可在基本设置中进行配置"
+
+msgid "Edit the 2nd template that is used for generating the samba configuration."
+msgstr "编辑第二个配置文件用来生成samba设置的模板，当第一个模版不能正常使用时，请在“常规配置”里选用配置2"

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+[ -h /usr/sbin/samba_multicall  ] && {
+	rm -rf /usr/sbin/samba_multicall
+	rm -rf /tmp/samba
+}
+
